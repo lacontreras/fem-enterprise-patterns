@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { fromEvent } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 
 @Component({
@@ -31,6 +32,14 @@ export class InputComponent implements OnInit {
   queryString;
 
   ngOnInit() {
+    this.searchControl.valueChanges // initial output
+      .pipe(
+        map((query) => encodeURI(query))
+        // map((query) => query.toUpperCase()),
+
+        // map((query) => query.split('').reverse().join(''))
+      )
+      .subscribe((query) => (this.queryString = query));
     // -------------------------------------------------------------------
     // CHALLENGE: Own that Input!
     // -------------------------------------------------------------------

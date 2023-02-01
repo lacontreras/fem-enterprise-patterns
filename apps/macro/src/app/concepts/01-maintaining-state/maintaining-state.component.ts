@@ -12,12 +12,14 @@ interface Coordinate {
   template: `
     <button #right mat-raised-button color="accent">Move Right</button>
     <div class="container">
-      <div #ball class="ball"
-           [style.left]="position.x + 'px'"
-           [style.top]="position.y + 'px'">
-      </div>
+      <div
+        #ball
+        class="ball"
+        [style.left]="position.x + 'px'"
+        [style.top]="position.y + 'px'"
+      ></div>
     </div>
-  `
+  `,
 })
 export class MaintainingStateComponent implements AfterViewInit {
   @ViewChild('right') right;
@@ -26,11 +28,13 @@ export class MaintainingStateComponent implements AfterViewInit {
   ngAfterViewInit() {
     fromEvent(this.getNativeElement(this.right), 'click')
       .pipe(
-        map(event => 10),
-        startWith({x: 100, y: 150}),
-        scan((acc: Coordinate, curr: number) => Object.assign({}, acc, {x: acc.x + curr}))
+        map((event) => 5),
+        startWith({ x: 100, y: 150 }),
+        scan((acc: Coordinate, curr: number) =>
+          Object.assign({}, acc, { x: acc.x + curr })
+        )
       )
-      .subscribe(position => this.position = position);
+      .subscribe((position) => (this.position = position));
   }
 
   getNativeElement(element) {
